@@ -7,9 +7,9 @@ import bedroomImg from "@/assets/bedroom.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kilde Cottage — One House. Three Brooks. Infinite Quiet." },
+      { title: "Chalet Rivera — One House. Three Brooks. Infinite Quiet." },
       { name: "description", content: "A single-occupancy two-bedroom mountain cottage with outdoor fireplace, tea stand, electric blankets and free wifi. Hosted one family at a time." },
-      { property: "og:title", content: "Kilde Cottage — One House. Three Brooks. Infinite Quiet." },
+      { property: "og:title", content: "Chalet Rivera — One House. Three Brooks. Infinite Quiet." },
       { property: "og:description", content: "A single-occupancy two-bedroom mountain cottage with outdoor fireplace, tea stand, electric blankets and free wifi." },
       { property: "og:image", content: cottageExterior },
       { name: "twitter:image", content: cottageExterior },
@@ -32,7 +32,7 @@ function Index() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 px-6 py-8 flex justify-between items-center mix-blend-multiply">
         <a href="#" onClick={scrollTo("top")} className="font-display italic text-2xl tracking-tight">
-          Kilde Cottage
+          Chalet Rivera
         </a>
         <div className="hidden md:flex gap-8 text-[11px] uppercase tracking-[0.2em] font-medium">
           <a href="#brooks" onClick={scrollTo("brooks")} className="hover:text-primary transition-colors">The Brook</a>
@@ -59,7 +59,7 @@ function Index() {
           <div className="lg:col-span-5 animate-fade-up [animation-delay:200ms]">
             <img
               src={cottageExterior}
-              alt="Kilde Cottage at dusk between three mountain brooks"
+              alt="Chalet Rivera at dusk between three mountain brooks"
               width={800}
               height={1000}
               className="w-full aspect-[4/5] object-cover rounded-sm ring-1 ring-border"
@@ -232,10 +232,10 @@ function Index() {
       <footer className="py-24 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
           <div className="max-w-xs">
-            <h4 className="font-display italic text-xl mb-4">Kilde Cottage</h4>
+            <h4 className="font-display italic text-xl mb-4">Chalet Rivera</h4>
             <p className="text-xs text-muted-foreground leading-relaxed">
               The High Woods, by Three Brooks.<br />
-              hello@kildecottage.com
+              hello@chaletrivera.com
             </p>
           </div>
           <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
