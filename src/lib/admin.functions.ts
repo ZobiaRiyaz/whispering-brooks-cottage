@@ -74,7 +74,11 @@ export const deleteInquiry = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => z.object({ id: z.string().uuid() }).parse(d))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
+    await context.supabase.from("blocked_dates").delete().eq("inquiry_id", data.id);
     const { error } = await context.supabase.from("inquiries").delete().eq("id", data.id);
+    if (error) throw new Error(error.message);
+    return { ok: true };
+  });
     if (error) throw new Error(error.message);
     return { ok: true };
   });
