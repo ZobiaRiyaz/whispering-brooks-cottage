@@ -79,9 +79,7 @@ export const deleteInquiry = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true };
   });
-    if (error) throw new Error(error.message);
-    return { ok: true };
-  });
+
 
 // ---------- BLOCKED DATES ----------
 export const listBlockedDates = createServerFn({ method: "GET" })
