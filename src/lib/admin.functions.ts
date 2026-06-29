@@ -48,20 +48,23 @@ export const updateInquiry = createServerFn({ method: "POST" })
       .single();
     if (error) throw new Error(error.message);
 
-    // If confirmed, auto-block those dates
-    if (data.status === "confirmed" && updated) {
-      await context.supabase
-        .from("blocked_dates")
-        .delete()
-        .eq("inquiry_id", data.id);
-      await context.supabase.from("blocked_dates").insert({
-        start_date: updated.check_in,
-        end_date: updated.check_out,
-        reason: `Confirmed: ${updated.name}`,
-        inquiry_id: data.id,
-      });
-    } else if (data.status && data.status !== "confirmed") {
-      await context.supabase.from("blocked_dates").delete().eq("inquiry_id", data.id);
+    // Sync the hold for this inquiry based on its status:
+    // - declined: release the hold so dates open again.
+    // - confirmed: relabel the hold as confirmed.
+    // - new/contacted: keep the hold as-is (auto-created on insert).
+    if (updated) {
+      if (data.status === "declined") {
+        await context.supabase.from("blocked_dates").delete().eq("inquiry_id", data.id);
+      } else if (data.status === "confirmed") {
+        await context.supabase
+          .from("blocked_dates")
+          .update({
+            start_date: updated.check_in,
+            end_date: updated.check_out,
+            reason: `Confirmed: ${updated.name}`,
+          })
+          .eq("inquiry_id", data.id);
+      }
     }
     return updated;
   });
