@@ -56,9 +56,20 @@ function Index() {
     supabase.from("cottage_content").select("*").eq("id", 1).single().then(({ data }) => {
       if (data) setContent(data as Content);
     });
-    supabase.from("blocked_dates").select("start_date,end_date").then(({ data }) => {
-      if (data) setBlocked(data);
-    });
+    const loadBlocked = () =>
+      supabase.from("blocked_dates").select("start_date,end_date").then(({ data }) => {
+        if (data) setBlocked(data);
+      });
+    loadBlocked();
+    const channel = supabase
+      .channel("blocked_dates_public")
+      .on("postgres_changes", { event: "*", schema: "public", table: "blocked_dates" }, () => {
+        loadBlocked();
+      })
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
   }, []);
 
   function isDateConflict(start: string, end: string): boolean {
