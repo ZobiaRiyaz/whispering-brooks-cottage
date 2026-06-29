@@ -37,7 +37,7 @@ export const updateInquiry = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => updateInquirySchema.parse(d))
   .handler(async ({ data, context }) => {
     await assertAdmin(context.supabase, context.userId);
-    const patch: Record<string, unknown> = {};
+    const patch: { status?: "new" | "contacted" | "confirmed" | "declined"; admin_notes?: string | null } = {};
     if (data.status !== undefined) patch.status = data.status;
     if (data.admin_notes !== undefined) patch.admin_notes = data.admin_notes;
     const { data: updated, error } = await context.supabase
